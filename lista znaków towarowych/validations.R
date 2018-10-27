@@ -1,17 +1,23 @@
 library(readr)
 library(assertr)
 library(dplyr)
+source("utils.R")
 validator <- Validator$new()
 
-listaZnakowTowarowych <- read_delim("data/2018_10_26_listaZnakowTowarowych.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+listaZnakowTowarowych <- read_delim("data/data_2.csv", ";",
+                                    escape_double = FALSE,
+                                    col_types = cols(.default = col_character()))
 
 listaZnakowTowarowych %>%
-  verify(title = "Zmienna 'Data_Zgloszenia' posiada klasę 'Date'",
-         class(Data_Zgloszenia) == "Date") %>%
-  verify(title = "Zmienna 'Data_Publikacji_BUP' posiada klasę 'Date'",
-         class(Data_Publikacji_BUP) == "Date") %>%
-  verify(title = "Zmienna 'Data_Publikacji_WUP' posiada klasę 'Date'",
-         class(Data_Publikacji_WUP) == "Date") %>%
+  verify(title = "Zbiór danych zawiera 16 kolumn",
+         ncol(.) == 16, mark_data_corrupted_on_failure = TRUE) %>%
+  assert(title = "Zmienna 'Data_Zgloszenia' jest formatu 'yyyy-mm-dd'",
+         check_date_format, Data_Zgloszenia) %>%
+  assert(title = "Zmienna 'Data_Publikacji_BUP' jest formatu 'yyyy-mm-dd'",
+         check_date_format, Data_Publikacji_BUP) %>%
+  assert(title = "Zmienna 'Data_Publikacji_WUP' jest formatu 'yyyy-mm-dd'",
+         check_date_format, Data_Publikacji_WUP) %>%
   validator$add_validations("listaZnakowTowarowych")
 
-validator$get_validations(type = "json")
+validator$get_validations(type = "data.frame") %>%
+  sum_up()
