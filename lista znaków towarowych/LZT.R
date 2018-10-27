@@ -5,9 +5,17 @@ listaZnakowTowarowych <- read_delim("data/2018_10_26_listaZnakowTowarowych.csv",
 
 validator <- Validator$new()
 
+validation_rules <- function(data) {
+  data %>%
+    chain_start() %>%
+    verify(title = "Zmienna 'Data_Zgloszenia' posiada klasę 'Date'",
+           v_class(Data_Zgloszenia) == "Date") %>%
+    verify(title = "Zmienna 'Data_Publikacji_BUP' posiada klasę 'Date'",
+           v_class(Data_Publikacji_BUP) == "Date") %>%
+    verify(title = "Zmienna 'Data_Publikacji_WUP' posiada klasę 'Date'",
+           v_class(Data_Publikacji_WUP) == "Date")
+}
+
 listaZnakowTowarowych %>%
-  chain_start() %>%
-  verify(title = "Zmienne określające datę posiadają klasę 'Date'",
-         v_class(Data_Zgloszenia, Data_Publikacji_BUP, Data_Publikacji_WUP) == "Date") %>%
-  chain_end(error_fun = error_append) %>%
+  validation_rules() %>%
   validator$add_validations(., "listaZnakowTowarowych")
