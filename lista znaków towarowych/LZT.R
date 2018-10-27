@@ -9,11 +9,11 @@ validation_rules <- function(data) {
   data %>%
     chain_start() %>%
     verify(title = "Zmienna 'Data_Zgloszenia' posiada klasę 'Date'",
-           v_class(Data_Zgloszenia) == "Date") %>%
+           class(Data_Zgloszenia) == "Date") %>%
     verify(title = "Zmienna 'Data_Publikacji_BUP' posiada klasę 'Date'",
-           v_class(Data_Publikacji_BUP) == "Date") %>%
+           class(Data_Publikacji_BUP) == "Date") %>%
     verify(title = "Zmienna 'Data_Publikacji_WUP' posiada klasę 'Date'",
-           v_class(Data_Publikacji_WUP) == "Date")
+           class(Data_Publikacji_WUP) == "Date")
 }
 
 listaZnakowTowarowych %>%
