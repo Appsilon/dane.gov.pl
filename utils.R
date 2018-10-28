@@ -3,12 +3,23 @@ library(assertr)
 library(dplyr)
 
 common_date_format <- "%Y-%m-%d"
+common_time_format <- "%Y-%m-%dT%H:%M:%S"
 
 check_date_format <- function(date) {
   tryCatch(!is.na(as.Date(date, common_date_format)),
     error = function(err) {FALSE})
 }
-attr(check_date_format,"assertr_vectorized") <- TRUE
+attr(check_date_format, "assertr_vectorized") <- TRUE
+
+check_datetime_format <- function(date) {
+  tryCatch(!is.na(as.POSIXct(date, common_time_format)),
+           error = function(err) {FALSE})
+}
+attr(check_datetime_format, "assertr_vectorized") <- TRUE
+
+check_data_last_5min <- function(time) {
+  as.POSIXct(time, common_time_format) <= Sys.time() - 5 * 60
+}
 
 sum_up <- function(validation_result) {
   disp_summary <- function(data_row) {
