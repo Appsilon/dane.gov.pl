@@ -1,6 +1,6 @@
 source("utils.R")
 
-listaZnakowTowarowych <- read_delim("data/data_2.csv", ";",
+listaZnakowTowarowych <- read_delim("lista znaków towarowych/2018_10_26_listaZnakowTowarowych_demo_2.csv", ";",
                                     escape_double = FALSE,
                                     col_types = cols(.default = col_character()))
 

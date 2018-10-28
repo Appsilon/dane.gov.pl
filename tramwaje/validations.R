@@ -1,9 +1,11 @@
 source("utils.R")
 
-tramwaje <- jsonlite::fromJSON("data/tramwaje.json")[[1]]
+api_url <- "https://api.um.warszawa.pl/api/action/wsstore_get/?id=c7238cfe-8b1f-4c38-bb4a-de386db7e776&apikey=f10fec28-bf17-4abd-94d7-7b42ac4ab33e"
+
+tramwaje <- jsonlite::fromJSON(api_url)[[1]]
 
 tramwaje %>%
-  verify(title = "Zbiór danych zawiera 8 kolumn",
+  verify(title = "Każde pojedyncze zapytanie zwraca 8 wartości",
          ncol(.) == 8, mark_data_corrupted_on_failure = TRUE) %>%
   assert(title = "Zmienna 'Time' jest formatu 'yyyy-mm-dd HH:MM:SS'",
          check_datetime_format, Time) %>%
