@@ -14,6 +14,6 @@ listaZnakowTowarowych %>%
   assert(title = "Zmienna 'Data_Publikacji_WUP' jest formatu 'yyyy-mm-dd'",
          check_date_format, Data_Publikacji_WUP) %>%
   validator$add_validations("listaZnakowTowarowych")
-
+...
 validator$get_validations(type = "data.frame") %>%
   sum_up()
