@@ -9,6 +9,10 @@ tramwaje %>%
          check_datetime_format, Time) %>%
   assert(title = "Dane nie są starsze niż 5 minut",
          check_data_last_5min, Time) %>%
+  assert(title = "Długość geograficzna jest w granicach Warszawy",
+         check_lat_in_warsaw, Lat) %>%
+  assert(title = "Szerokosć geograficzna jest w granicach Warszawy",
+         check_lon_in_warsaw, Lon) %>%
   validator$add_validations("tramwaje")
 
 validator$get_validations(type = "data.frame") %>%
