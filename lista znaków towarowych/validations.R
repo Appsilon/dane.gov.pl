@@ -1,10 +1,6 @@
-library(readr)
-library(assertr)
-library(dplyr)
 source("utils.R")
-validator <- Validator$new()
 
-listaZnakowTowarowych <- read_delim("data/data_2.csv", ";",
+listaZnakowTowarowych <- read_delim("data/data_1.csv", ";",
                                     escape_double = FALSE,
                                     col_types = cols(.default = col_character()))
 
